@@ -116,6 +116,10 @@ public class MainController implements Initializable {
     @FXML
     public Label depositLabel1;
     @FXML
+    public Label depositLabel2;
+    @FXML
+    public Label sumLabel;
+    @FXML
     public Button loadMarketButton;
 
     @FXML
@@ -128,12 +132,12 @@ public class MainController implements Initializable {
 
     private double deposit;
     private double total;
+    private double totalwv;
     private int minAge;
     private int maxAge;
     private double minPrice;
     private double maxPrice;
     private GenderType gender;
-
 
     public void filter(){
         marketplace.filter(minAge,maxAge,minPrice,maxPrice,gender);
@@ -148,13 +152,38 @@ public class MainController implements Initializable {
     }
 
     public void addToShoppingCart() {
-        if(deposit> (this.offerTable.getSelectionModel().getSelectedItem().getPrice() + this.offerTable.getSelectionModel().getSelectedItem().getPrice()* cart.getVat())) {
-            deposit -= (this.offerTable.getSelectionModel().getSelectedItem().getPrice() + this.offerTable.getSelectionModel().getSelectedItem().getPrice()* cart.getVat()) ;
-            total += this.offerTable.getSelectionModel().getSelectedItem().getPrice() + this.offerTable.getSelectionModel().getSelectedItem().getPrice()* cart.getVat();
+        if(deposit> (this.offerTable.getSelectionModel().getSelectedItem().getPrice()+this.offerTable.getSelectionModel().getSelectedItem().getPrice()*cart.getVat())) {
+
+            deposit -= (this.offerTable.getSelectionModel().getSelectedItem().getPrice()+this.offerTable.getSelectionModel().getSelectedItem().getPrice()*cart.getVat());
+
+            totalwv += this.offerTable.getSelectionModel().getSelectedItem().getPrice() +this.offerTable.getSelectionModel().getSelectedItem().getPrice()*cart.getVat();
+
+            total +=  this.offerTable.getSelectionModel().getSelectedItem().getPrice() ;
+
             cart.addChild(this.offerTable.getSelectionModel().getSelectedItem());
             marketplace.removeOffer(this.offerTable.getSelectionModel().getSelectedItem());
+
+            sumLabel.setText(String.valueOf(cart.getSize()));
+
             filter();
         }
+    }
+
+    public void removeFromShoppingCart() {
+
+            deposit += (this.offerTable1.getSelectionModel().getSelectedItem().getPrice()+this.offerTable1.getSelectionModel().getSelectedItem().getPrice()*cart.getVat());
+
+            totalwv -= (this.offerTable1.getSelectionModel().getSelectedItem().getPrice() +this.offerTable1.getSelectionModel().getSelectedItem().getPrice()*cart.getVat());
+
+            total -=  (this.offerTable1.getSelectionModel().getSelectedItem().getPrice()) ;
+
+            marketplace.addChild(this.offerTable1.getSelectionModel().getSelectedItem());
+            cart.removeOffer(this.offerTable1.getSelectionModel().getSelectedItem());
+
+            sumLabel.setText(String.valueOf(cart.getSize()));
+
+            filter();
+
     }
 
     public void onCheckCartButtonClick() {
@@ -319,7 +348,8 @@ public class MainController implements Initializable {
         initTableView();
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         depositLabel.setText(String.valueOf(decimalFormat.format(deposit)));
-        depositLabel1.setText(String.valueOf(decimalFormat.format(total)));
+        depositLabel1.setText(String.valueOf(decimalFormat.format(totalwv)));
+        depositLabel2.setText(String.valueOf(decimalFormat.format(total)));
         tabDetail.setDisable(true);
         sldWeight.setDisable(true);
         checkboxTrueRace.setDisable(true);
@@ -330,6 +360,7 @@ public class MainController implements Initializable {
 
         deposit = 20000;
         total = 0;
+        totalwv = 0;
         this.cart = new ShoppingCart();
         this.cart.setVat(0.21);
 
@@ -340,6 +371,7 @@ public class MainController implements Initializable {
         for(Child child: cart.getChildList()){
             marketplace.addChild(child);
         }
+        sumLabel.setText("0");
         initCart();
         filter();
     }

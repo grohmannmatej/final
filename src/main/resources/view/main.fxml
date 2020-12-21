@@ -315,7 +315,7 @@
                               <Insets top="4.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#reloadMarket" prefWidth="158.0" text="Odebrat z košíku">
+                        <Button mnemonicParsing="false" onMouseClicked="#removeFromShoppingCart" prefWidth="158.0" text="Odebrat z košíku">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin>
@@ -360,7 +360,7 @@
                            </VBox.margin>
                         </Label>
                         <Separator prefWidth="200.0" />
-                        <Label  alignment="CENTER" prefWidth="158.0" text="5000">
+                        <Label fx:id="sumLabel"  alignment="CENTER" prefWidth="158.0" text="0">
                            <font>
                               <Font name="Arial Black" size="18.0" />
                            </font>
@@ -383,7 +383,7 @@
                                  </VBox.margin>
                               </Label>
                               <Separator prefWidth="200.0" />
-                              <Label alignment="CENTER" prefWidth="158.0" text="5000">
+                              <Label fx:id="depositLabel2" alignment="CENTER" prefWidth="158.0" text="5000">
                                  <font>
                                     <Font name="Arial Black" size="18.0" />
                                  </font>

@@ -146,6 +146,10 @@ public class ShoppingCart {
         return childList;
     }
 
+    public int getSize(){
+        return getOfferList().size();
+    }
+
     @Override
     public String toString() {
         return "ShoppingCart{" +
@@ -156,5 +160,9 @@ public class ShoppingCart {
                 ", subtotal=" + subtotal +
                 ", total=" + total +
                 '}';
+    }
+
+    public void removeOffer(Child selectedItem) {
+        getOfferList().remove(selectedItem);
     }
 }
