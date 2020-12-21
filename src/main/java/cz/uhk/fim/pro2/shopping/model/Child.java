@@ -4,6 +4,7 @@ import cz.uhk.fim.pro2.shopping.utils.FileUtils;
 import javafx.beans.property.*;
 import javafx.scene.image.Image;
 
+import java.text.DecimalFormat;
 import java.time.Year;
 import java.util.Calendar;
 import java.util.Date;
@@ -79,6 +80,13 @@ public class Child {
 
     public DoubleProperty getPriceProperty() {
         return new SimpleDoubleProperty(price);
+    }
+
+    public SimpleDoubleProperty getPriceProperty(double vat) {
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        double formated = Double.parseDouble(decimalFormat.format(price+price*vat));
+        return new SimpleDoubleProperty(formated);
     }
 
     public void setPrice(double price) {
@@ -219,5 +227,15 @@ public class Child {
                 ", hairColor=" + hairColor +
                 ", avatar=" + avatar +
                 '}';
+    }
+
+
+
+    public StringProperty getNationalityProperty() {
+        return new SimpleStringProperty(nationality);
+    }
+
+    public SimpleDoubleProperty getWeightProperty() {
+        return new SimpleDoubleProperty(getWeight());
     }
 }

@@ -67,6 +67,8 @@ public class MainController implements Initializable {
     @FXML
     public TableView<Child> offerTable;
     @FXML
+    public TableView<Child> offerTable1;
+    @FXML
     public TableColumn<Child, String> colId;
     @FXML
     public TableColumn<Child, String> colName;
@@ -76,6 +78,20 @@ public class MainController implements Initializable {
     public TableColumn<Child, GenderType> colGender;
     @FXML
     public TableColumn<Child, Double> colPrice;
+    @FXML
+    public TableColumn<Child, String> colId1;
+    @FXML
+    public TableColumn<Child, String> colName1;
+    @FXML
+    public TableColumn<Child, Integer> colAge1;
+    @FXML
+    public TableColumn<Child, GenderType> colGender1;
+    @FXML
+    public TableColumn<Child, Double> colPrice1;
+    @FXML
+    public TableColumn<Child, Double> colWeight1;
+    @FXML
+    public TableColumn<Child, String> colNationality1;
     @FXML
     public Tab tabDetail;
     @FXML
@@ -97,7 +113,8 @@ public class MainController implements Initializable {
     public TextField maxAgeValue;
     @FXML
     public Label depositLabel;
-
+    @FXML
+    public Label depositLabel1;
     @FXML
     public Button loadMarketButton;
 
@@ -110,13 +127,13 @@ public class MainController implements Initializable {
     private Child currentChild;
 
     private double deposit;
+    private double total;
     private int minAge;
     private int maxAge;
     private double minPrice;
     private double maxPrice;
     private GenderType gender;
 
-    private boolean wasAdded;
 
     public void filter(){
         marketplace.filter(minAge,maxAge,minPrice,maxPrice,gender);
@@ -131,9 +148,9 @@ public class MainController implements Initializable {
     }
 
     public void addToShoppingCart() {
-        if(deposit> this.offerTable.getSelectionModel().getSelectedItem().getPrice()) {
-            wasAdded = true;
-            deposit -= this.offerTable.getSelectionModel().getSelectedItem().getPrice();
+        if(deposit> (this.offerTable.getSelectionModel().getSelectedItem().getPrice() + this.offerTable.getSelectionModel().getSelectedItem().getPrice()* cart.getVat())) {
+            deposit -= (this.offerTable.getSelectionModel().getSelectedItem().getPrice() + this.offerTable.getSelectionModel().getSelectedItem().getPrice()* cart.getVat()) ;
+            total += this.offerTable.getSelectionModel().getSelectedItem().getPrice() + this.offerTable.getSelectionModel().getSelectedItem().getPrice()* cart.getVat();
             cart.addChild(this.offerTable.getSelectionModel().getSelectedItem());
             marketplace.removeOffer(this.offerTable.getSelectionModel().getSelectedItem());
             filter();
@@ -153,9 +170,21 @@ public class MainController implements Initializable {
         this.colName.setCellValueFactory(cellData -> cellData.getValue().getDisplayNameProperty());
         this.colAge.setCellValueFactory(cellData -> cellData.getValue().getAgeProperty().asObject());
         this.colGender.setCellValueFactory(cellData -> cellData.getValue().getGenderProperty());
-        this.colPrice.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty().asObject());
+        this.colPrice.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty(cart.getVat()).asObject());
 
         this.offerTable.setItems(this.marketplace.getOfferList());
+
+
+        this.colId1.setCellValueFactory(cellData -> cellData.getValue().getPersonalIdProperty());
+        this.colName1.setCellValueFactory(cellData -> cellData.getValue().getDisplayNameProperty());
+        this.colAge1.setCellValueFactory(cellData -> cellData.getValue().getAgeProperty().asObject());
+        this.colGender1.setCellValueFactory(cellData -> cellData.getValue().getGenderProperty());
+        this.colPrice1.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty().asObject());
+        this.colWeight1.setCellValueFactory(cellData -> cellData.getValue().getWeightProperty().asObject());
+        this.colNationality1.setCellValueFactory(cellData -> cellData.getValue().getNationalityProperty());
+
+        this.offerTable1.setItems(this.cart.getOfferList());
+
 
         this.offerTable.getSelectionModel().getSelectedCells().addListener(new ListChangeListener<TablePosition>() {
 
@@ -167,6 +196,7 @@ public class MainController implements Initializable {
                     TablePosition tablePosition = (TablePosition) selectedCells.get(0);
                     currentChild = marketplace.getOfferList().get(tablePosition.getRow());
                 }
+
                 updateUi();
 
             }
@@ -289,6 +319,7 @@ public class MainController implements Initializable {
         initTableView();
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         depositLabel.setText(String.valueOf(decimalFormat.format(deposit)));
+        depositLabel1.setText(String.valueOf(decimalFormat.format(total)));
         tabDetail.setDisable(true);
         sldWeight.setDisable(true);
         checkboxTrueRace.setDisable(true);
@@ -296,9 +327,21 @@ public class MainController implements Initializable {
     }
 
     private void initCart() {
-        deposit = 10000;
+
+        deposit = 20000;
+        total = 0;
         this.cart = new ShoppingCart();
         this.cart.setVat(0.21);
+
+
+    }
+
+    public void resetCart(){
+        for(Child child: cart.getChildList()){
+            marketplace.addChild(child);
+        }
+        initCart();
+        filter();
     }
 
     @Override

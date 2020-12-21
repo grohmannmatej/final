@@ -83,4 +83,7 @@ public class Marketplace {
         this.offerList = offerList;
     }
 
+    public void addChild(Child child){
+        offerBackUpList.add(child);
+    }
 }

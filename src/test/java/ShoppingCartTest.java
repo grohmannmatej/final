@@ -1,6 +1,8 @@
 import cz.uhk.fim.pro2.shopping.model.Child;
 import cz.uhk.fim.pro2.shopping.model.GenderType;
 import cz.uhk.fim.pro2.shopping.model.ShoppingCart;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +35,7 @@ public class ShoppingCartTest {
         Assertions.assertEquals(0, cart.getChildCount());
 
         // test pro 2 deti v listu
-        List<Child> childList2Childs = new ArrayList<>();
+        ObservableList<Child> childList2Childs = FXCollections.observableArrayList();
         childList2Childs.add(new Child());
         childList2Childs.add(new Child());
         cart.setChildList(childList2Childs);

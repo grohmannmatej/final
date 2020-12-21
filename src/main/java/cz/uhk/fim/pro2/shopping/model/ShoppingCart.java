@@ -1,5 +1,8 @@
 package cz.uhk.fim.pro2.shopping.model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,17 +15,17 @@ import java.util.List;
  */
 public class ShoppingCart {
     private int cartId; // id kosiku
-    private List<Child> childList; // seznam vlozenych deti (artiklu)
+    private ObservableList<Child> childList; // seznam vlozenych deti (artiklu)
     private double vat; // DPH
     private double fee; // poplatky, postovne, balne
     private double subtotal; // mezisoucet (bez zapocteneho DPH)
     private double total; // celkovy soucet
 
     public ShoppingCart() {
-        this.childList = new ArrayList<>();
+        this.childList = FXCollections.observableArrayList();
     }
 
-    public ShoppingCart(int cartId, List<Child> childList, double vat, double fee, double subtotal, double total) {
+    public ShoppingCart(int cartId, ObservableList<Child> childList, double vat, double fee, double subtotal, double total) {
         this.cartId = cartId;
         this.childList = childList;
         this.vat = vat;
@@ -102,7 +105,7 @@ public class ShoppingCart {
         return childList;
     }
 
-    public void setChildList(List<Child> childList) {
+    public void setChildList(ObservableList<Child> childList) {
         this.childList = childList;
     }
 
@@ -136,6 +139,11 @@ public class ShoppingCart {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+
+    public ObservableList<Child> getOfferList() {
+        return childList;
     }
 
     @Override
