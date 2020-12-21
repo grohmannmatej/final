@@ -1,5 +1,6 @@
 package cz.uhk.fim.pro2.shopping.model;
 
+import cz.uhk.fim.pro2.shopping.utils.FileUtils;
 import javafx.beans.property.*;
 import javafx.scene.image.Image;
 
@@ -15,7 +16,6 @@ public class Child {
     private String displayName;
     private double price;
     private Date birthDate;
-    private int age;
     private GenderType gender;
     private boolean virginity;
     private double weight;
@@ -24,8 +24,9 @@ public class Child {
     private int skinTone;
     private int eyeColor;
     private int hairColor;
-    // transient - znaci, ze tato promenna nema byt serializovana
-    private transient Image avatar;
+    private Image avatar;
+    private Image imgVirginity;
+    private Image imgGender;
 
     public Child() {
     }
@@ -35,7 +36,6 @@ public class Child {
         this.displayName = displayName;
         this.price = price;
         this.birthDate = birthDate;
-        this.age = getAge();
         this.gender = gender;
         this.virginity = virginity;
         this.weight = weight;
@@ -45,6 +45,8 @@ public class Child {
         this.eyeColor = eyeColor;
         this.hairColor = hairColor;
         this.avatar = avatar;
+        setImgVirginity();
+        setImgGender();
     }
 
     public String getPersonalId() {
@@ -111,6 +113,7 @@ public class Child {
 
     public void setGender(GenderType gender) {
         this.gender = gender;
+        setImgGender();
     }
 
     public boolean isVirginity() {
@@ -119,6 +122,7 @@ public class Child {
 
     public void setVirginity(boolean virginity) {
         this.virginity = virginity;
+        setImgVirginity();
     }
 
     public double getWeight() {
@@ -177,7 +181,26 @@ public class Child {
         this.hairColor = hairColor;
     }
 
+    public Image getImgVirginity() {
+        return imgVirginity;
+    }
 
+    public void setImgGender() {
+        if(gender == GenderType.MALE){
+         imgGender = FileUtils.loadImage("boy.png","gender");
+        }
+        else imgGender = FileUtils.loadImage("girl.png", "gender");
+    }
+
+    public Image getImgGender() {
+        return imgGender;
+    }
+
+    public void setImgVirginity() {
+        if (isVirginity()){
+            imgVirginity = FileUtils.loadImage("virgin.png", "virginity");
+        } else imgVirginity = FileUtils.loadImage("notvirgin.png", "virginity");
+    }
 
     @Override
     public String toString() {
@@ -194,6 +217,7 @@ public class Child {
                 ", skinTone=" + skinTone +
                 ", eyeColor=" + eyeColor +
                 ", hairColor=" + hairColor +
+                ", avatar=" + avatar +
                 '}';
     }
 }

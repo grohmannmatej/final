@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.uhk.fim.pro2.shopping.ui.MainController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.uhk.fim.pro2.shopping.ui.MainController">
   <tabs>
     <Tab text="Market">
       <content>
@@ -126,22 +126,22 @@
                            </VBox.margin>
                         </Label>
                         <Separator prefWidth="200.0" />
-                        <Button mnemonicParsing="false" onMouseClicked="#addChildToShoppingCart" prefWidth="158.0" text="Přidat do košíku">
+                        <Button mnemonicParsing="false" onMouseClicked="#addToShoppingCart" prefWidth="158.0" text="Přidat do košíku">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#loadMarketplace" prefWidth="158.0" text="Načtení marketu">
+                        <Button mnemonicParsing="false" prefWidth="158.0" text="Načtení marketu">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#saveOffers" prefWidth="158.0" text="Uložení nabídky">
+                        <Button mnemonicParsing="false" prefWidth="158.0" text="Uložení nabídky">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#clearFilters" prefWidth="158.0" text="Vymazání filtrů">
+                        <Button mnemonicParsing="false" prefWidth="158.0" text="Vymazání filtrů">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin>
@@ -181,10 +181,27 @@
                <children>
                   <Pane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
                      <children>
-                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/image/avatar/boy-1.png" />
-                           </image></ImageView>
+                        <ImageView fx:id="Avatar" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        </ImageView>
+                     </children>
+                     <effect>
+                        <DropShadow blurType="GAUSSIAN" color="#b9b7b7" offsetY="6.0" />
+                     </effect>
+                  </Pane>
+                  <Pane layoutX="14.0" layoutY="140.0" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="14.0">
+                     <children>
+                        <ImageView fx:id="Gender" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                        </ImageView>
+                     </children>
+                     <effect>
+                        <DropShadow blurType="GAUSSIAN" color="#b9b7b7" offsetY="6.0" />
+                     </effect>
+                  </Pane>
+
+                  <Pane layoutX="14.0" layoutY="140.0" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="14.0">
+                     <children>
+                        <ImageView fx:id="Virginity" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                        </ImageView>
                      </children>
                      <effect>
                         <DropShadow blurType="GAUSSIAN" color="#b9b7b7" offsetY="6.0" />
@@ -212,7 +229,7 @@
                         <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Slider fx:id="sldWeight" blockIncrement="0.1" layoutX="271.0" layoutY="201.0" majorTickUnit="50.0" max="150.0" minorTickCount="10" showTickLabels="true" />
+                  <Slider fx:id="sldWeight" blockIncrement="0.1" layoutX="271.0" layoutY="201.0" majorTickUnit="30.0" max="90.0" minorTickCount="10" showTickLabels="true" />
                   <CheckBox fx:id="checkboxTrueRace" alignment="CENTER" allowIndeterminate="true" contentDisplay="CENTER" layoutX="488.0" layoutY="180.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="220.0" text="ŘÍKÁ SI O RASOVÉ NARÁŽKY" wrapText="true">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
@@ -255,7 +272,7 @@
                         <Font name="Arial" size="13.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblNationality" layoutX="323.0" layoutY="233.0" text="Czech">
+                  <Label fx:id="lblNationality" layoutX="323.0" layoutY="233.0">
                      <font>
                         <Font name="Arial Bold Italic" size="18.0" />
                      </font>

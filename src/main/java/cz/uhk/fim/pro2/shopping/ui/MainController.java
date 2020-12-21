@@ -9,13 +9,24 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+
+//    @FXML
+//    public Pane pnlColor;
+//    @FXML
+//    public Label lblNameAndAge;
+//    @FXML
+//    public Label lblPrice;
+//    @FXML
+//    public TextArea txtLog;
 
     @FXML
     public Label lblDisplayName;
@@ -31,8 +42,6 @@ public class MainController implements Initializable {
     public Label lblNationality;
     @FXML
     public CheckBox checkboxTrueRace;
-    @FXML
-    public ImageView imgVirginity;
     @FXML
     public DatePicker dtBirthDate;
     @FXML
@@ -55,67 +64,49 @@ public class MainController implements Initializable {
     @FXML
     public Tab tabDetail;
 
-    // TODO [assignment2] pridat/provazat komponentu pro obrazek ditete v karte detailu
-    //  *tip* pozor na spravny import u ImageView
-    // TODO [assignment2] pridat/provazat komponentu pro obrazek pohlavi v karte detailu
-    // TODO [assignment2] pridat/provazat komponentu pro obrazek atributu virginity v karte detailu (id v ui: imgVirginity)
+    @FXML
+    public ImageView Gender;
 
-    // reference na nakupni kosik
+    @FXML
+    public ImageView Virginity;
+
+    @FXML
+    public ImageView Avatar;
+
     private ShoppingCart cart;
-    // reference na marketplace
+
     private Marketplace marketplace;
-    // reference na aktualni zobrazene dite
+
+    private List<Child> childsToBuy;
+
     private Child currentChild;
 
-    /**
-     * OnClick Listener tlacitka "Pridat do kosiku"
-     */
-    public void addChildToShoppingCart() {
+    public void onSkipButtonClick() {
+        this.currentChild = this.childsToBuy.get(this.childsToBuy.indexOf(this.currentChild) + 1);
+        updateUi();
+    }
+
+    public void addToShoppingCart() {
         System.out.println(this.offerTable.getSelectionModel().getSelectedItem());
-        // TODO [assignment_final] pridani aktualniho vyberu do kosiku
-        //  - pri pridani prvku do kosiku aktualizuji hodnotu "budgetu" v UI
     }
 
-    /**
-     * OnClick Listener tlacitka "Nacteni marketu"
-     */
-    public void loadMarketplace() {
-        for (Child child : this.marketplace.getOfferList()) {
-            System.out.println(child);
+    public void onCheckCartButtonClick() {
+        StringBuilder sb = new StringBuilder();
+        for (Child child : this.cart.getChildList()) {
+            sb.append(child).append("\n");
         }
-        // TODO [assignment_final] pregenerovani vsech nabidek (nove nabidky)
+//        txtLog.setText(sb.toString());
     }
 
-    /**
-     * OnClick Listener tlacitka "Ulozeni nabidky"
-     */
-    public void saveOffers() {
-        System.out.println(this.currentChild);
-        // TODO [assignment_final] ulozeni aktualnich nabidek do souboru (vyberte si nazev souboru a format jaky uznate za vhodny - CSV nebo JSON)
-    }
-
-    /**
-     * OnClick Listener tlacitka "Vymazani filtru"
-     */
-    public void clearFilters() {
-        // TODO [assignment_final] vycisteni aktualne nastavenych filtru
-    }
-
-    /**
-     * Inicializacni metoda pro tabulku nabidek
-     */
     private void initTableView() {
-        // nastaveni sloupcu pro zobrazeni spravne hodnoty a korektniho datoveho typu
         this.colId.setCellValueFactory(cellData -> cellData.getValue().getPersonalIdProperty());
         this.colName.setCellValueFactory(cellData -> cellData.getValue().getDisplayNameProperty());
         this.colAge.setCellValueFactory(cellData -> cellData.getValue().getAgeProperty().asObject());
         this.colGender.setCellValueFactory(cellData -> cellData.getValue().getGenderProperty());
         this.colPrice.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty().asObject());
 
-        // nastaveni listu prvku tabulce
         this.offerTable.setItems(this.marketplace.getOfferList());
 
-        // listener pro zjisteni, ktery prvek tabulky uzivatel oznacil a naplneni aktualni reference na vybrane dite
         this.offerTable.getSelectionModel().getSelectedCells().addListener(new ListChangeListener<TablePosition>() {
 
             @Override
@@ -133,11 +124,6 @@ public class MainController implements Initializable {
         this.marketplace = new Marketplace();
     }
 
-
-    // TODO [assignment_final] pridejte implementaci filtru (propojte s metodou 'filter' v tride Marketplace)
-    //  idealni chovani - jakmile zadam nejake hodnoty do UI s libovolnym filtrem, automaticky se mi aktualizuje nabidka v tabulce
-    //  dostacujici chovani - pridam si do UI tlacitko pro "vyhledani vysledku dle fitru" (nazev necham na vas), ktere vyvola aktualizaci nabidky v tabulce
-
     private void updateUi() {
         this.tabDetail.setDisable(false);
         this.lblDisplayName.setText(this.currentChild.getDisplayName());
@@ -153,9 +139,10 @@ public class MainController implements Initializable {
         this.sldWeight.setValue(this.currentChild.getWeight());
         this.checkboxTrueRace.setSelected(!this.currentChild.isRace());
 
-        // TODO [assignment2] nastavit obrazek/avatar ditete v karte detailu
-        // TODO [assignment2] nastavit spravny obrazek pohlavi v karte detailu
-        // TODO [assignment2] nastavit spravny obrazek virginity atribut v v karte detailu
+        Gender.setImage(this.currentChild.getImgGender());
+        Virginity.setImage(this.currentChild.getImgVirginity());
+        Avatar.setImage(this.currentChild.getAvatar());
+        lblNationality.setText(this.currentChild.getNationality());
     }
 
     private void initUi() {
@@ -171,21 +158,10 @@ public class MainController implements Initializable {
         this.cart.setVat(0.21);
     }
 
-    // TODO [assignment_final] implementace UI kosiku:
-    //  UI bude obsahovat:
-    //  - tabulku se vsemi prvky v kosiku (v tabulce budou vsechny atributy, ktere),
-    //  - celkovy pocet prvku v kosiku,
-    //  - celkovy soucet (bez DPH a s DPH),
-    //  - ovladaci prvky pro: odebrani vybraneho prvku z kosiku (po odebrani se prvek vrati zpet do nabidek) a dokonceni objednavky (pokud bude celkovy soucet s DPH vetsi nez dostupny budget, nedovolte dokoncit objednavku)
-    //  Dokoncena objednavka se ulozi do souboru, kosik se vyprazdni, zakaznikovi se odecte castka od jeho budgetu.
-    //      Soubor s dokoncenou objednavkou: nazev si vyberte, format CSV
-    //      - do toho stejneho souboru uvedte (v uvodu) informace o objednavce - id a username zakaznika, celkovy soucet bez a s DPH + dalsimi poplatky
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initCart();
         initMarketplace();
         initUi();
-        // TODO [assignment_final] inicializujte zakaznika (bud manualne nebo pomoci nejakeho dialogu), nastavte mu nejake vychozi hodnoty - id, username, heslo, kosik, adresu a budget
     }
 }

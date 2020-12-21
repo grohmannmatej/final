@@ -1,6 +1,8 @@
 package cz.uhk.fim.pro2.shopping.model;
 
 import cz.uhk.fim.pro2.shopping.utils.DataGenerator;
+//import cz.uhk.fim.pro2.shopping.utils.parser.CSVParser;
+//import cz.uhk.fim.pro2.shopping.utils.parser.JSONParser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -12,71 +14,19 @@ public class Marketplace {
     private ObservableList<Child> offerList;
 
     public Marketplace() {
-        this.offerList = FXCollections.observableArrayList();
-        String[] boyNames = { "Charles", "John", "Henry", "Adolf"};
-        String[] girlNames = { "Jane", "Helen", "Kate", "Eva"};
-        String[] nationalitaies = { "Czech", "American", "Afroamerican", "German"};
+        this.offerList = DataGenerator.generateOffers(20);
 
-        Random random = new Random();
 
-        for (String name : boyNames) {
-            this.offerList.add(new Child(
-                    String.valueOf(Math.abs(name.hashCode())),
-                    name,
-                    random.nextDouble() * 15000,
-                    DataGenerator.randomBirthdate(),
-                    GenderType.MALE,
-                    random.nextBoolean(),
-                    random.nextDouble() * 100,
-                    random.nextBoolean(),
-                    nationalitaies[random.nextInt(4)],
-                    0x88aef9,
-                    0xaa3d98,
-                    0x55fe13,
-                    null
-            ));
-        }
+        // JSONParser.toFile("json-list", this.offerList);
+        // CSVParser.toFile(this.offerList, "csv-list");
 
-        for (String name : girlNames) {
-            this.offerList.add(new Child(
-                    String.valueOf(Math.abs(name.hashCode())),
-                    name,
-                    random.nextDouble() * 10000,
-                    DataGenerator.randomBirthdate(),
-                    GenderType.FEMALE,
-                    random.nextBoolean(),
-                    random.nextDouble() * 100,
-                    random.nextBoolean(),
-                    nationalitaies[random.nextInt(4)],
-                    0xaa3d98,
-                    0x55fe13,
-                    0x88aef9,
-                    null
-            ));
-        }
+        int minAge = 0;
+        int maxAge = 14;
+        double minPrice = 0;
+        double maxPrice = 2000;
+        GenderType gender = GenderType.MALE;
 
-//        // cast kodu pro vygenerovani CSV souboru s detmi
-//        CSVHandler.generateCsv("children", this.offerList);
-//        // cast kodu pro rozparsovani CSV souboru a vypis deti do konzole
-//        for (Child child : CSVHandler.parseCsv("children")) {
-//            System.out.println(child);
-//        }
-//
-//        // cast kodu pro vygenerovani JSON souboru s detmi
-//        JSONHandler.generateJson("children", this.offerList);
-//        // cast kodu pro rozparsovani JSON souboru a vypis deti do konzole
-//        for (Child child : JSONHandler.parseJson("children")) {
-//            System.out.println(child);
-//        }
-
-//        // priklad pouziti metody filter
-//        int minAge = 0;
-//        int maxAge = 14;
-//        double minPrice = 0;
-//        double maxPrice = 2000;
-//        GenderType gender = GenderType.MALE;
-//
-//        filter(minAge, maxAge, minPrice, maxPrice, gender);
+        filter(minAge, maxAge, minPrice, maxPrice, gender);
 
     }
 
@@ -93,10 +43,10 @@ public class Marketplace {
                 .stream()
                 .filter(child ->
                         child.getAge() >= minAge &&
-                        child.getAge() <= maxAge &&
-                        child.getPrice() >= minPrice &&
-                        child.getPrice() <= maxPrice &&
-                        child.getGender().equals(gender)
+                                child.getAge() <= maxAge &&
+                                child.getPrice() >= minPrice &&
+                                child.getPrice() <= maxPrice &&
+                                child.getGender().equals(gender)
                 )
                 .collect(Collectors.toList());
 
@@ -108,19 +58,11 @@ public class Marketplace {
     }
 
     /**
-     * Metoda pridat nabidku zpet do listu po odebrani z kosiku
-     * @param child dite
-     */
-    public void addOffer(Child child) {
-        // TODO [assignment_final] pridani nabidky do listu
-    }
-
-    /**
      * Metoda odebere nabidku z listu po pridani do kosiku podle indexu
      * @param index index nabidky
      */
     public void removeOffer(int index) {
-        // TODO [assignment_final] odebrani prvku z listu dle indexu
+        // TODO odebrani prvku z listu dle indexu
     }
 
     /**
@@ -128,7 +70,7 @@ public class Marketplace {
      * @param child reference na konkretni nabidku
      */
     public void removeOffer(Child child) {
-        // TODO [assignment_final] odebrani prvku z listu dle reference
+        // TODO odebrani prvku z listu dle reference
     }
 
     /**
@@ -137,7 +79,7 @@ public class Marketplace {
      * @return nabidka/dite
      */
     public Child getOfferDetail(int index) {
-        // TODO [assignment_final] vraceni vybrane nabidky podle indexu
+        // TODO vraceni vybrane nabidky podle indexu
         return null;
     }
 
