@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 
 import java.awt.event.MouseAdapter;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -86,6 +87,8 @@ public class MainController implements Initializable {
     public TextField minAgeValue;
     @FXML
     public TextField maxAgeValue;
+    @FXML
+    public Label depositLabel;
 
     @FXML
     public Button loadMarketButton;
@@ -98,11 +101,14 @@ public class MainController implements Initializable {
     private List<Child> childsToBuy;
     private Child currentChild;
 
+    private double deposit;
     private int minAge;
     private int maxAge;
     private double minPrice;
     private double maxPrice;
     private GenderType gender;
+
+    private boolean wasAdded;
 
     public void filter(){
         marketplace.filter(minAge,maxAge,minPrice,maxPrice,gender);
@@ -117,7 +123,13 @@ public class MainController implements Initializable {
     }
 
     public void addToShoppingCart() {
-        System.out.println(this.offerTable.getSelectionModel().getSelectedItem());
+        if(deposit> this.offerTable.getSelectionModel().getSelectedItem().getPrice()) {
+            wasAdded = true;
+            deposit -= this.offerTable.getSelectionModel().getSelectedItem().getPrice();
+            cart.addChild(this.offerTable.getSelectionModel().getSelectedItem());
+            marketplace.removeOffer(this.offerTable.getSelectionModel().getSelectedItem());
+            filter();
+        }
     }
 
     public void onCheckCartButtonClick() {
@@ -141,43 +153,28 @@ public class MainController implements Initializable {
 
             @Override
             public void onChanged(Change<? extends TablePosition> change) {
+
                 ObservableList selectedCells = offerTable.getSelectionModel().getSelectedCells();
-                TablePosition tablePosition = (TablePosition) selectedCells.get(0);
-                currentChild = marketplace.getOfferList().get(tablePosition.getRow());
+                if(selectedCells.size()>0) {
+                    TablePosition tablePosition = (TablePosition) selectedCells.get(0);
+                    currentChild = marketplace.getOfferList().get(tablePosition.getRow());
+                }
                 updateUi();
+
             }
         });
     }
 
     private void initListeners(){
         initFilterListeners();
-        initButtonListeners();
     }
 
-    private void initButtonListeners(){
-        loadMarketButton.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override public void handle(ActionEvent e)
-            {
-                initMarketplace();
-                filter();
-                initUi();
-            }
-        });
-
-        resetFiltersButton.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override public void handle(ActionEvent e)
-            {
-                initFilterVariables();
-
-
-
-
-                filter();
-            }
-        });
+    public void reloadMarket(){
+        initMarketplace();
+        filter();
+        initUi();
     }
+
 
     private void initFilterListeners() {
 
@@ -277,10 +274,13 @@ public class MainController implements Initializable {
         Virginity.setImage(this.currentChild.getImgVirginity());
         Avatar.setImage(this.currentChild.getAvatar());
         lblNationality.setText(this.currentChild.getNationality());
+
     }
 
     private void initUi() {
         initTableView();
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        depositLabel.setText(String.valueOf(decimalFormat.format(deposit)));
         tabDetail.setDisable(true);
         sldWeight.setDisable(true);
         checkboxTrueRace.setDisable(true);
@@ -288,6 +288,7 @@ public class MainController implements Initializable {
     }
 
     private void initCart() {
+        deposit = 10000;
         this.cart = new ShoppingCart();
         this.cart.setVat(0.21);
     }
@@ -312,5 +313,12 @@ public class MainController implements Initializable {
         maxAgeValue.setText("");
         minPriceValue.setText("");
         maxPriceValue.setText("");
+        filter();
     }
+
+    public void saveMarket(){
+
+    }
+
+
 }

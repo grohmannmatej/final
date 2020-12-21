@@ -131,17 +131,17 @@
                               <Insets top="4.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="loadMarketButton" mnemonicParsing="false" prefWidth="158.0" text="Načtení marketu">
+                        <Button onMouseClicked="#reloadMarket" mnemonicParsing="false" prefWidth="158.0" text="Načtení marketu">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefWidth="158.0" text="Uložení nabídky">
+                        <Button mnemonicParsing="false" onMouseClicked="#saveMarket" prefWidth="158.0" text="Uložení nabídky">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="resetFiltersButton" mnemonicParsing="false" prefWidth="158.0" text="Vymazání filtrů">
+                        <Button fx:id="resetFiltersButton"  onMouseClicked="#initFilterVariables" mnemonicParsing="false" prefWidth="158.0" text="Vymazání filtrů">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin>
@@ -162,7 +162,7 @@
                            </VBox.margin>
                         </Label>
                         <Separator prefWidth="200.0" />
-                        <Label alignment="CENTER" prefWidth="158.0" text="5000">
+                        <Label fx:id="depositLabel" alignment="CENTER" prefWidth="158.0" text="5000">
                            <font>
                               <Font name="Arial Black" size="18.0" />
                            </font>

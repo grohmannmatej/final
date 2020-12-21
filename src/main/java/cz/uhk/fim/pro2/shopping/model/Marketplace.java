@@ -53,7 +53,7 @@ public class Marketplace {
      */
     public void removeOffer(int index) {
         // odebrani prvku z listu dle indexu
-        offerList.remove(index);
+        offerBackUpList.remove(index);
     }
 
     /**
@@ -62,7 +62,7 @@ public class Marketplace {
      */
     public void removeOffer(Child child) {
         // odebrani prvku z listu dle reference
-        offerList.remove(child);
+        offerBackUpList.remove(child);
     }
 
     /**
