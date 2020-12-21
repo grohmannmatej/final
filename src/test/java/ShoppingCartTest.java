@@ -42,6 +42,7 @@ public class ShoppingCartTest {
         Assertions.assertEquals(2, cart.getChildCount(), "ocekavam 2 deti");
     }
 
+
     @Test
     @DisplayName("Test pro overeni pridani deti do listu")
     public void test_addChild() {
@@ -123,7 +124,7 @@ public class ShoppingCartTest {
         childList.add(child1);
         childList.add(child2);
 
-        this.cart.setChildList(childList);
+        this.cart.setChildList((ObservableList<Child>) childList);
         this.cart.setVat(0.21);
         this.cart.setFee(170);
 

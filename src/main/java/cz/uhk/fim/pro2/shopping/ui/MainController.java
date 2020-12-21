@@ -1,9 +1,11 @@
 package cz.uhk.fim.pro2.shopping.ui;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import cz.uhk.fim.pro2.shopping.model.Child;
 import cz.uhk.fim.pro2.shopping.model.GenderType;
 import cz.uhk.fim.pro2.shopping.model.Marketplace;
 import cz.uhk.fim.pro2.shopping.model.ShoppingCart;
+import cz.uhk.fim.pro2.shopping.utils.FileUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -383,6 +385,7 @@ public class MainController implements Initializable {
         initUi();
         initListeners();
         initFilterVariables();
+
     }
 
     public void initFilterVariables(){
@@ -400,7 +403,11 @@ public class MainController implements Initializable {
     }
 
     public void saveMarket(){
-
+        try {
+            FileUtils.writeToFile(marketplace.toString(),"test",".txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void goToOrderSummary() throws URISyntaxException, IOException {

@@ -86,4 +86,11 @@ public class Marketplace {
     public void addChild(Child child){
         offerBackUpList.add(child);
     }
+
+    @Override
+    public String toString() {
+        return "Marketplace{" +
+                "offerList=" + offerList +
+                '}';
+    }
 }
