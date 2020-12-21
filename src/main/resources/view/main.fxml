@@ -41,7 +41,7 @@
                               <Insets bottom="4.0" top="8.0" />
                            </VBox.margin>
                         </Label>
-                        <ChoiceBox prefWidth="158.0">
+                        <ChoiceBox fx:id="genderFilterBox" prefWidth="158.0">
                            <VBox.margin>
                               <Insets bottom="6.0" left="4.0" right="4.0" />
                            </VBox.margin>
@@ -61,7 +61,7 @@
                               </Label>
                            </left>
                            <center>
-                              <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="115.0" BorderPane.alignment="CENTER" />
+                              <TextField fx:id="minAgeValue" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="115.0" BorderPane.alignment="CENTER" />
                            </center>
                            <VBox.margin>
                               <Insets bottom="4.0" />
@@ -72,7 +72,7 @@
                               <Label prefWidth="30.0" text="Max:" BorderPane.alignment="CENTER" />
                            </left>
                            <center>
-                              <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="115.0" BorderPane.alignment="CENTER" />
+                              <TextField fx:id="maxAgeValue" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="115.0" BorderPane.alignment="CENTER" />
                            </center>
                            <VBox.margin>
                               <Insets bottom="6.0" />
@@ -93,7 +93,7 @@
                               </Label>
                            </left>
                            <center>
-                              <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="115.0" BorderPane.alignment="CENTER" />
+                              <TextField fx:id="minPriceValue" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="115.0" BorderPane.alignment="CENTER" />
                            </center>
                            <VBox.margin>
                               <Insets bottom="4.0" />
@@ -104,7 +104,7 @@
                               <Label prefWidth="30.0" text="Max:" BorderPane.alignment="CENTER" />
                            </left>
                            <center>
-                              <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="115.0" BorderPane.alignment="CENTER" />
+                              <TextField fx:id="maxPriceValue" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="115.0" BorderPane.alignment="CENTER" />
                            </center>
                            <VBox.margin>
                               <Insets bottom="4.0" />
@@ -131,7 +131,7 @@
                               <Insets top="4.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefWidth="158.0" text="Načtení marketu">
+                        <Button fx:id="loadMarketButton" mnemonicParsing="false" prefWidth="158.0" text="Načtení marketu">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin>
@@ -141,7 +141,7 @@
                               <Insets top="4.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefWidth="158.0" text="Vymazání filtrů">
+                        <Button fx:id="resetFiltersButton" mnemonicParsing="false" prefWidth="158.0" text="Vymazání filtrů">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin>
