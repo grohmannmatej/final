@@ -320,7 +320,7 @@
                               <Insets top="4.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#saveMarket" prefWidth="158.0" text="Vygeneruj soubor">
+                        <Button mnemonicParsing="false" onMouseClicked="#saveCart" prefWidth="158.0" text="Vygeneruj soubor">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin>

@@ -25,6 +25,7 @@ import javafx.scene.image.ImageView;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -385,7 +386,6 @@ public class MainController implements Initializable {
         initUi();
         initListeners();
         initFilterVariables();
-
     }
 
     public void initFilterVariables(){
@@ -408,6 +408,17 @@ public class MainController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void saveCart(){
+        try {
+            FileUtils.printShoppingCart("finalOrder.pdf",cart);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        FileUtils.openFile("finalOrder.pdf");
+
     }
 
     public void goToOrderSummary() throws URISyntaxException, IOException {

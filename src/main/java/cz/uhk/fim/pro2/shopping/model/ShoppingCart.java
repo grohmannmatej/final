@@ -165,4 +165,27 @@ public class ShoppingCart {
     public void removeOffer(Child selectedItem) {
         getOfferList().remove(selectedItem);
     }
+
+    public Child getChild(int index){
+        return getOfferList().get(index);
+    }
+
+    public double getFinalPrice() {
+
+        double totalPrice = 0;
+
+        for(Child child: childList){
+            totalPrice += child.getPrice();
+        }
+
+        totalPrice = totalPrice + totalPrice*getVat();
+
+        return totalPrice;
+
+    }
+
+    public double getFinalPrice(int index){
+        return childList.get(index).getPrice()+childList.get(index).getPrice()*getVat();
+    }
+
 }
